@@ -24,7 +24,6 @@
 // $blogs = $wp_blogs['body'];
 // print_r($blogs);
 // die();
-
 ?>
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
