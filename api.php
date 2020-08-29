@@ -59,8 +59,12 @@ class RestApi{
 
 	public function add_my_custom_post(){
 
-		$title = $_POST['title'];
-		$content = $_POST['content'];
+		$title = $_POST['title']?? null;
+		$content = $_POST['content']?? null;
+		if($title==null || $content==null){
+			echo "title and content required";
+			die;
+		}
 		$wp_request_url = site_url().'/wp-json/wp/v2/blog/';
 		$wp_request_headers = array('Authorization' => 'Basic ' . base64_encode( 'mynotebook:mynotebook' ));
 		// print_r($wp_request_headers);
@@ -82,7 +86,7 @@ class RestApi{
 		// echo json_encode($_POST);
 
 		echo wp_remote_retrieve_response_message( $wp_posts );
-		die;
+		
 
 	}	
 	public function update_my_custom_post(){
