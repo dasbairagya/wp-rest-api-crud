@@ -2,7 +2,7 @@
       //http://localhost/notebook/wp-json/wp/posts/?_embed
   $wp_request_url = site_url().'/wp-json/wp/v2/blog?_embed';
 
-  $wp_request_headers = array('Authorization' => 'Basic ' . base64_encode( 'mynotebook:mynotebook' ));
+  // $wp_request_headers = array('Authorization' => 'Basic ' . base64_encode( 'mynotebook:mynotebook' ));
   // print_r($wp_request_headers);
   $body = array('title' => 'Lorem Ipsum ', 'content'=>'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.');
 
@@ -10,7 +10,7 @@
     $wp_request_url,
     array(
         'method'    => 'GET',
-        'headers'   => $wp_request_headers
+        'headers'   => AUTH
         // 'body'      => $body
     )
   );
@@ -66,7 +66,7 @@
                             <!-- <td><input type="checkbox" class="checkthis" /></td> -->
                             <td> <img width='100' height='80' src="<?php echo $blog['_embedded']['wp:featuredmedia']['0']['source_url'];?>"></td>
                             <td><?php echo $blog['title']['rendered'];?></td>
-                            <td><?php echo substr($blog['content']['rendered'],0,180);?></td>
+                            <td><?php echo substr($blog['content']['rendered'],0,220);?></td>
                             <td><?php echo $blog['modified'];?></td>
                             <td><?php echo $blog['status'];?></td>
                             
@@ -116,13 +116,13 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <input id="title_edit" class="form-control" type="text" name="title" placeholder="Mohsin" />
+                    <input id="title_edit" class="form-control" type="text" name="title" placeholder="Title" />
                 </div>
                 <!-- <div class="form-group">
                     <input class="form-control" type="text" placeholder="Irshad" />
                 </div> -->
                 <div class="form-group">
-                    <textarea id="description_edit" rows="4" class="form-control" name="content" placeholder="CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan"></textarea>
+                    <textarea id="description_edit" rows="4" class="form-control" name="content" placeholder="Content"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
@@ -146,13 +146,13 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <input id="title_edit" class="form-control" type="text" name="title" placeholder="Mohsin" />
+                    <input id="title_edit" class="form-control" type="text" name="title" placeholder="Title" />
                 </div>
                 <!-- <div class="form-group">
                     <input class="form-control" type="text" placeholder="Irshad" />
                 </div> -->
                 <div class="form-group">
-                    <textarea id="description_edit" rows="4" class="form-control" name="content" placeholder="CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan"></textarea>
+                    <textarea id="description_edit" rows="4" class="form-control" name="content" placeholder="Content"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
@@ -220,7 +220,7 @@
                 if(response=="Created"){
                     setTimeout(function(){
                         location.reload();
-                    },1200);
+                    },700);
                 }
                 else{
                     console.log("Something went wrong!");
@@ -254,7 +254,7 @@
                 if(response=="OK"){
                     setTimeout(function(){
                         location.reload();
-                    },1200);
+                    },700);
                 }
                 else{
                     console.log("Something went wrong!");
@@ -282,7 +282,7 @@
                 if(response=="OK"){
                     setTimeout(function(){
                         location.reload();
-                    },1200);
+                    },700);
                 }
                 else{
                     console.log("Something went wrong!");
