@@ -200,8 +200,25 @@ class RestApi{
 			<?php 
 			exit;
 		}
+		else{
+				$userdata = get_user_by('login', $this->user);
+				$result = wp_check_password($this->pass, $userdata->user_pass, $userdata->ID);
+				if($result){
+					include 'html.php';
+				}
+				else{
+					?>
+					<div class="wrap">
+						
+						<div id="setting-error-settings_updated" class="notice notice-warning settings-error is-dismissible"> 
+<p><strong>Invalid Password</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>
+					</div>
+					<?php
+				}
 
-		include 'html.php';
+		}
+
+
 
 	}
 

@@ -19,7 +19,7 @@
 				        <th scope="row">Rest Password
 				        </th>
 				        <td>
-				          <input type="text" name="rest_password" value="<?php echo esc_attr( get_option('rest_password') ); ?>" />
+				          <input type="password" name="rest_password" value="<?php echo esc_attr( get_option('rest_password') ); ?>" />
 				        </td>
 				      </tr>
 
