@@ -44,11 +44,12 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h4>Bootstrap Snipp for Datatable</h4>
+            <h4>WP CRUD via Rest Api</h4> 
+            <button type="submit" class="btn btn-success add-new" data-title="Edit" data-toggle="modal" data-target="#add"><span class="glyphicon glyphicon-plus-sign"></span> Add New</button>
             <div class="table-responsive">
                 <table id="mytable" class="table table-bordred table-striped">
                     <thead>
-                        <th><input type="checkbox" id="checkall" /></th>
+                        <!-- <th><input type="checkbox" id="checkall" /></th> -->
                         <th>Image</th>
                         <th>Title</th>
                         <th>Content</th>
@@ -68,7 +69,7 @@
                         
                             ?>
                           <tr>
-                            <td><input type="checkbox" class="checkthis" /></td>
+                            <!-- <td><input type="checkbox" class="checkthis" /></td> -->
                             <td> <img width='100' height='80' src="<?php echo $blog['_embedded']['wp:featuredmedia']['0']['source_url'];?>"></td>
                             <td><?php echo $blog['title']['rendered'];?></td>
                             <td><?php echo $blog['content']['rendered'];?></td>
@@ -93,7 +94,7 @@
                 </table>
 
                 <div class="clearfix"></div>
-                <ul class="pagination pull-right">
+             <!--    <ul class="pagination pull-right">
                     <li class="disabled">
                         <a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a>
                     </li>
@@ -105,17 +106,46 @@
                     <li>
                         <a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a>
                     </li>
-                </ul>
+                </ul> -->
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="javascript:void(0)" id="formAdd">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Add Post Detail</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input id="title_edit" class="form-control" type="text" name="title" placeholder="Mohsin" />
+                </div>
+                <!-- <div class="form-group">
+                    <input class="form-control" type="text" placeholder="Irshad" />
+                </div> -->
+                <div class="form-group">
+                    <textarea id="description_edit" rows="4" class="form-control" name="content" placeholder="CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Add</button>
+            </div>
+          </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>
 
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
           <form action="javascript:void(0)" id="formEdit">
-            <input type="hidden" id="post-id" name="id"/>
+            <input type="hidden" id="post-eid" name="id"/>
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                 <h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
@@ -141,9 +171,12 @@
     <!-- /.modal-dialog -->
 </div>
 
+
 <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
+            <form action="javascript:void(0)" id="formDelete">
+            <input type="hidden" id="post-did" name="id"/>
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                 <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
@@ -152,9 +185,10 @@
                 <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
             </div>
+        </form>
         </div>
         <!-- /.modal-content -->
     </div>
@@ -179,15 +213,39 @@
     });
 
 
+
+    jQuery("#formAdd").on("submit", function () {
+        var frmdata = jQuery(this).serialize();
+        // var nonce_param = "controller=posts&method=update_post";
+        // jQuery.post(ajaxurl , function (response) {
+            // var nonce = response.nonce;
+            frmdata += "&action=" + 'add_custom_posts';
+            // console.log(frmdata);
+            jQuery.post(ajaxurl, frmdata, function (response) {
+                console.log(response);
+                if(response=="Created"){
+                    setTimeout(function(){
+                        location.reload();
+                    },1200);
+                }
+                else{
+                    console.log("Something went wrong!");
+                }
+            });
+        // });
+    });
+
+
+
     jQuery(document).on("click", ".post-edit", function () {
         var description = jQuery(this).parents("tr").find("td:nth(3)").text();
         var title = jQuery(this).parents("tr").find("td:nth(2)").text();
         jQuery("#edit #title_edit").val(title);
         jQuery("#edit #description_edit").val(description);
-        jQuery("#post-id").val(jQuery(this).attr("data-id"));
-        jQuery("#post-id").val(jQuery(this).attr("data-id"));
+        jQuery("#post-eid").val(jQuery(this).attr("data-id"));
 
-    });
+    });    
+
 
     jQuery("#formEdit").on("submit", function () {
         var frmdata = jQuery(this).serialize();
@@ -198,11 +256,47 @@
             // console.log(frmdata);
             jQuery.post(ajaxurl, frmdata, function (response) {
               console.log(response);
-                setTimeout(function(){
-                    location.reload();
-                },1200);
+                console.log(response);
+                if(response=="OK"){
+                    setTimeout(function(){
+                        location.reload();
+                    },1200);
+                }
+                else{
+                    console.log("Something went wrong!");
+                }
             });
         // });
     });
+
+
+    jQuery(document).on("click", ".post-delete", function () {
+
+        jQuery("#post-did").val(jQuery(this).attr("data-id"));
+
+    });
+
+    jQuery("#formDelete").on("submit", function () {
+        var frmdata = jQuery(this).serialize();
+        // var nonce_param = "controller=posts&method=update_post";
+        // jQuery.post(ajaxurl , function (response) {
+            // var nonce = response.nonce;
+            frmdata += "&action=" + 'delete_custom_posts';
+            // console.log(frmdata);
+            jQuery.post(ajaxurl, frmdata, function (response) {
+                console.log(response);
+                if(response=="OK"){
+                    setTimeout(function(){
+                        location.reload();
+                    },1200);
+                }
+                else{
+                    console.log("Something went wrong!");
+                }
+              
+            });
+        // });
+    });
+
 
 </script>
