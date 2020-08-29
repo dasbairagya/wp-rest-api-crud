@@ -59,13 +59,14 @@
 
                           // echo '<pre><br>';
                           // print_r($blog);
+                            
                         
                             ?>
                           <tr>
                             <!-- <td><input type="checkbox" class="checkthis" /></td> -->
                             <td> <img width='100' height='80' src="<?php echo $blog['_embedded']['wp:featuredmedia']['0']['source_url'];?>"></td>
                             <td><?php echo $blog['title']['rendered'];?></td>
-                            <td><?php echo $blog['content']['rendered'];?></td>
+                            <td><?php echo substr($blog['content']['rendered'],0,180);?></td>
                             <td><?php echo $blog['modified'];?></td>
                             <td><?php echo $blog['status'];?></td>
                             
@@ -231,8 +232,8 @@
 
 
     jQuery(document).on("click", ".post-edit", function () {
-        var description = jQuery(this).parents("tr").find("td:nth(3)").text();
-        var title = jQuery(this).parents("tr").find("td:nth(2)").text();
+        var title = jQuery(this).parents("tr").find("td:nth(1)").text();
+        var description = jQuery(this).parents("tr").find("td:nth(2)").text();
         jQuery("#edit #title_edit").val(title);
         jQuery("#edit #description_edit").val(description);
         jQuery("#post-eid").val(jQuery(this).attr("data-id"));

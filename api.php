@@ -92,8 +92,13 @@ class RestApi{
 	public function update_my_custom_post(){
 
 		$id = $_POST['id'];
-		$title = $_POST['title'];
-		$content = $_POST['content'];
+		$title = $_POST['title']?? null;
+		$content = $_POST['content']?? null;
+		if($title==null || $content==null){
+			echo "title and content required";
+			die;
+		}
+
 		$wp_request_url = site_url().'/wp-json/wp/v2/blog/'.$id;
 		$wp_request_headers = array('Authorization' => 'Basic ' . base64_encode( 'mynotebook:mynotebook' ));
 		// print_r($wp_request_headers);
